@@ -3,33 +3,27 @@ using namespace std;
 
 int main()
 {
-    int n;
-    cout << "Enter number of vertices: ";
-    cin >> n;
+    int n = 4;
 
-    int graph[10][10];
+    int graph[4][4] = {
+        {0, 10, 15, 20},
+        {10, 0, 35, 25},
+        {15, 35, 0, 30},
+        {20, 25, 30, 0}
+    };
 
-    cout << "Enter the adjacency matrix:\n";
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cin >> graph[i][j];
-        }
-    }
-
-    int selected[10] = {0};
+    int selected[4] = {0};
     selected[0] = 1;
 
     int edges = 0;
     int totalCost = 0;
 
-    cout << "\nEdges in Minimum Spanning Tree:\n";
+    cout << "Edges in Minimum Spanning Tree:\n";
 
     while (edges < n - 1)
     {
         int min = 9999;
-        int x = 0, y = 0;
+        int x = -1, y = -1;
 
         for (int i = 0; i < n; i++)
         {
@@ -37,14 +31,13 @@ int main()
             {
                 for (int j = 0; j < n; j++)
                 {
-                    if (selected[j] == 0 && graph[i][j] != 0)
+                    if (selected[j] == 0 &&
+                        graph[i][j] != 0 &&
+                        graph[i][j] < min)
                     {
-                        if (graph[i][j] < min)
-                        {
-                            min = graph[i][j];
-                            x = i;
-                            y = j;
-                        }
+                        min = graph[i][j];
+                        x = i;
+                        y = j;
                     }
                 }
             }
