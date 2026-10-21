@@ -27,30 +27,22 @@ void unite(int a, int b)
 
 int main()
 {
-    int n, e;
+    int n = 4;
+    int e = 5;
 
-    cout << "Enter number of vertices: ";
-    cin >> n;
+    Edge edges[5] = {
+        {0, 1, 10},
+        {0, 2, 6},
+        {0, 3, 5},
+        {1, 3, 15},
+        {2, 3, 4}
+    };
 
-    cout << "Enter number of edges: ";
-    cin >> e;
-
-    Edge edges[20];
-
-    cout << "Enter edges (source destination weight):\n";
-
-    for (int i = 0; i < e; i++)
-    {
-        cin >> edges[i].u >> edges[i].v >> edges[i].weight;
-    }
-
-    // Sort edges according to weight
     sort(edges, edges + e, [](Edge a, Edge b)
     {
         return a.weight < b.weight;
     });
 
-    // Initially every vertex is its own parent
     for (int i = 0; i < n; i++)
     {
         parent[i] = i;
@@ -59,14 +51,13 @@ int main()
     int totalCost = 0;
     int count = 0;
 
-    cout << "\nEdges in Minimum Spanning Tree:\n";
+    cout << "Edges in Minimum Spanning Tree:\n";
 
     for (int i = 0; i < e && count < n - 1; i++)
     {
         int rootU = find(edges[i].u);
         int rootV = find(edges[i].v);
 
-        // Add edge only if it does not form a cycle
         if (rootU != rootV)
         {
             cout << edges[i].u << " - "
@@ -74,9 +65,7 @@ int main()
                  << edges[i].weight << endl;
 
             totalCost += edges[i].weight;
-
             unite(rootU, rootV);
-
             count++;
         }
     }
